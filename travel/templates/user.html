@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <h4>{{heading}}</h4>
+    </div>
+
+
+    <!-- Flashes any Messages to the User -->
+
+    <!-- Render Forms -->
+    <div class="col-md-6 ml-5">
+        {{render_form(form)}}
+    </div>
+
+    <!-- Show the Register Link on the Login Form -->
+    {% if heading|lower == 'login' %}
+    <div class="col-md-4 mb-5 ml-5">
+        <p>Don't have an account? 
+            <a href="{{ url_for('auth.register') }}">Click Here to Make an Account</a>!
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- Show the Login Link on the Register Form -->
+    {% if heading|lower == 'register' %}
+    <div class="col-md-4 mb-5 ml-5">
+        <p>Already have an Account?
+            <a href="{{ url_for('auth.login') }}">Click Here to Login</a>.
+        </p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
