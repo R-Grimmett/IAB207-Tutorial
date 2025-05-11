@@ -3,6 +3,7 @@ from .forms import LoginForm, RegisterForm
 
 authbp = Blueprint('auth', __name__)
 
+
 @authbp.route('/login', methods=['GET', 'POST'])
 def login():
     loginForm = LoginForm()
@@ -11,6 +12,7 @@ def login():
         flash('You have logged in successfully')
         return redirect(url_for('auth.login'))
     return render_template('user.html', form=loginForm, heading='Login')
+
 
 @authbp.route('/register', methods=['GET', 'POST'])
 def register():
