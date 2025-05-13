@@ -54,9 +54,9 @@ def check_upload_file(form):
   # Get the current path of the module file and store image relative to this path
   BASE_PATH = os.path.dirname(__file__)
   # Upload file location
-  upload_path = os.path.join(BASE_PATH, 'static/image', secure_filename(filename))
+  upload_path = os.path.join(BASE_PATH, 'static\image', secure_filename(filename))
   # Store relative path in the DB as image location in HTML
-  db_upload_path = '/static/image' + secure_filename(filename)
+  db_upload_path = '../static/image/' + secure_filename(filename)
   # Save image and return relative path for DB storage
   fp.save(upload_path)
   return db_upload_path
