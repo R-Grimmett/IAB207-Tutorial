@@ -7,13 +7,8 @@
         <div class="col-md-8">
             <div class="card shadow p-5 mb-5 bg-light">
                 <h1 class="text-center mb-3">Find our best travel deals</h1>
-                <form class="form-inline d-flex flex-nowrap">
-
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Select a destination...</option>
-                        <option value="america">America</option>
-                        <option value="africa">Africa</option>
-                    </select>
+                <form class="form-inline d-flex flex-nowrap" action="{{ url_for('main.search') }}">
+                    <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
                     <button type="submit" class="flex-shrink-1 btn btn-primary ms-2">Submit</button>
                 </form>
 
@@ -42,36 +37,23 @@
         </div>
     </div>
 
-    <div class="card-group">
-        <div class="card mx-3">
-            <img class="card-img-top"
-                 src="https://media-cdn.tripadvisor.com/media/photo-s/0e/9c/a0/02/eiffel-tower.jpg" alt="France">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
+    <div class="card-group container">
+        <div class="row row-cols-3">
+            {% for destination in destinations %}
+            <div class="col">
+                <div class="card mx-3">
+                    <img class="card-img-top" src="{{destination.image}}" alt="{{destination.name}} picture.">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ destination.name }}</h5>
+                        <p class="card-text">{{ destination.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('destination.show', id=destination.id) }}" class="btn btn-warning"> View
+                            Details </a>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
-        </div>
-        <div class="card mx-3">
-            <img class="card-img-top" src="https://media-cdn.tripadvisor.com/media/photo-s/12/44/87/23/london.jpg"
-                 alt="United Kingdom">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-            </div>
-            <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
-        </div>
-        <div class="card mx-3">
-            <img class="card-img-top" src="https://media-cdn.tripadvisor.com/media/photo-s/12/44/6e/a0/rome.jpg"
-                 alt="Italy">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-            </div>
-            <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
+            {% endfor %}
         </div>
     </div>
 </div>
