@@ -1,14 +1,19 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 
+from travel.auth import login
 
 def create_app():
     app = Flask(__name__)
 
     Bootstrap5(app)
+    Bcrypt(app)
+
     app.secret_key = 'somerandomvalue'
 
     # CONFIG DB and initialise it
@@ -18,6 +23,16 @@ def create_app():
     # CONFIG Image Upload Folder
     UPLOAD_FOLDER = '/static/image'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+    # Initialise the login manager for the app
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    from .models import User
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db.session.scalar(db.select(User).where(User.id == user_id))
 
     # add Blueprints
     from . import views

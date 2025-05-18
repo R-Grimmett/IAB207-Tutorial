@@ -1,16 +1,17 @@
 from . import db
 from datetime import datetime
+from flask_login import UserMixin
 
 
 # As all the data is stored in the DB we don't need __init__() functions
 # Good practice to specify __tablename__
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-    emailid = db.Column(db.String(100), index=True, nullable=False)
+    email_id = db.Column(db.String(100), index=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     # Reference to the Comments that the User has made
     comments = db.relationship('Comment', backref='user')
