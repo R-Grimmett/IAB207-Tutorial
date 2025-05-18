@@ -1,4 +1,6 @@
-from flask import Flask
+from dbm.dumb import error
+
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -6,7 +8,8 @@ from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 
-from travel.auth import login
+# This has to be imported after we declare db as it references db
+from .auth import login
 
 def create_app():
     app = Flask(__name__)
@@ -29,6 +32,7 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+
     from .models import User
     @login_manager.user_loader
     def load_user(user_id):
@@ -41,5 +45,9 @@ def create_app():
     app.register_blueprint(destinations.destbp)
     from . import auth
     app.register_blueprint(auth.authbp)
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template("error.html", error=e)
 
     return app
