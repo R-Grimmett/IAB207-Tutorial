@@ -40,7 +40,6 @@ class Destination(db.Model):
         if (len(short_description) > 300):
             short_description = short_description[0:299]
             last_whitespace = re.search("\s\S+$", short_description)
-            print(last_whitespace)
             if(last_whitespace != None):
                 short_description = short_description[0:last_whitespace.start()] + " . . ."
             else:
