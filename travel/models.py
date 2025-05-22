@@ -1,3 +1,4 @@
+import re
 from . import db
 from datetime import datetime
 from flask_login import UserMixin
@@ -32,6 +33,19 @@ class Destination(db.Model):
 
     def __repr__(self):
         return f"Name: {self.name}"
+
+    # Gets a shortened description for the cards on the front page.
+    def fetchShortDescription(self):
+        short_description = self.description
+        if (len(short_description) > 300):
+            short_description = short_description[0:299]
+            last_whitespace = re.search("\s\S+$", short_description)
+            print(last_whitespace)
+            if(last_whitespace != None):
+                short_description = short_description[0:last_whitespace.start()] + " . . ."
+            else:
+                short_description = short_description + " . . ."
+        return short_description
 
 
 class Comment(db.Model):

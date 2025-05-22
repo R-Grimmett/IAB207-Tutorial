@@ -31,7 +31,9 @@
                     <p class="d-none d-sm-block">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
                         scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
                         turpis. Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                    {% if current_user.is_anonymous %}
                     <a href="#" class="btn btn-primary">Join Now</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
                     <img class="card-img-top" src="{{destination.image}}" alt="{{destination.name}} picture.">
                     <div class="card-body">
                         <h5 class="card-title">{{ destination.name }}</h5>
-                        <p class="card-text">{{ destination.description }}</p>
+                        <p class="card-text">{{ destination.fetchShortDescription() }}</p>
                     </div>
                     <div class="card-footer">
                         <a href="{{ url_for('destination.show', id=destination.id) }}" class="btn btn-warning"> View
